@@ -2,81 +2,88 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2F5496">
+<link rel="manifest" href="data:application/json,{"name":"WAIC面试发音","short_name":"WAIC发音","start_url":".","display":"standalone","background_color":"#f5f7fa","theme_color":"#2F5496","icons":[{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMkY1NDk2Ii8+PHRleHQgeD0iNTAiIHk9IjY4IiBmb250LXNpemU9IjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIj5BPC90ZXh0Pjwvc3ZnPg==","sizes":"100x100","type":"image/svg+xml"}]}">
 <title>WAIC面试发音练习</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#333;max-width:800px;margin:0 auto;min-height:100vh}
-header{position:sticky;top:0;z-index:100;background:#2F5496;color:#fff;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-header h1{font-size:16px;font-weight:600}
-.mode-switch{display:flex;gap:4px;background:rgba(255,255,255,.2);border-radius:20px;padding:3px}
-.mode-btn{border:none;background:none;color:rgba(255,255,255,.7);padding:6px 14px;border-radius:17px;font-size:13px;cursor:pointer}
-.mode-btn.active{background:#fff;color:#2F5496;font-weight:600}
-.toolbar{display:flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;border-bottom:1px solid #e0e0e0;position:sticky;top:48px;z-index:99}
-.toolbar .count{font-size:12px;color:#888;flex:1}
-.toolbar button{border:1px solid #ccc;background:#fff;padding:5px 12px;border-radius:14px;font-size:12px;cursor:pointer;color:#555}
-#content{padding:8px 14px 80px}
-.pblock{margin-bottom:8px;line-height:1.8}
-.pblock.cn{color:#555;font-size:14px;background:#fffbe6;padding:8px 12px;border-radius:6px;border-left:3px solid #faad14}
-.pblock.en{font-size:14px;background:#fff;padding:10px 12px;border-radius:6px;border:1px solid #e8ecf1;line-height:2.3}
-.wtok{display:inline;cursor:pointer;padding:2px 1px;border-radius:3px;transition:background .15s;user-select:none;touch-action:manipulation}
-.wtok:hover,.wtok:active{background:#dce8fc}
-.wtok.playing{background:#b8d4fe!important;animation:blink .35s infinite}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Roboto','Segoe UI',sans-serif;background:#f5f7fa;color:#333;max-width:100vw;margin:0 auto;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+header{position:sticky;top:0;z-index:100;background:#2F5496;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+header h1{font-size:17px;font-weight:600;letter-spacing:.5px}
+.mode-switch{display:flex;gap:4px;background:rgba(255,255,255,.2);border-radius:22px;padding:3px}
+.mode-btn{border:none;background:none;color:rgba(255,255,255,.7);padding:7px 16px;border-radius:19px;font-size:14px;cursor:pointer;font-weight:500}
+.mode-btn.active{background:#fff;color:#2F5496;font-weight:700}
+.toolbar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:#fff;border-bottom:1px solid #e0e0e0;position:sticky;top:53px;z-index:99}
+.toolbar .count{font-size:13px;color:#888;flex:1}
+.toolbar button{border:1px solid #d0d0d0;background:#fff;padding:8px 16px;border-radius:20px;font-size:13px;cursor:pointer;color:#555;font-weight:500;min-height:36px}
+.toolbar #markToggle{border-color:#e74c3c;color:#e74c3c}
+#content{padding:12px 16px 100px}
+.pblock{margin-bottom:10px;line-height:2}
+.pblock.cn{color:#555;font-size:15px;background:#fffbe6;padding:12px 14px;border-radius:8px;border-left:4px solid #faad14;margin-bottom:6px}
+.pblock.en{font-size:15px;background:#fff;padding:12px 14px;border-radius:8px;border:1px solid #e8ecf1;line-height:2.4}
+.wtok{display:inline;cursor:pointer;padding:3px 2px;border-radius:4px;transition:background .12s;user-select:none;touch-action:manipulation;-webkit-user-select:none}
+.wtok:active{background:#c8daf8!important}
+.wtok.playing{background:#a8c8f4!important;animation:blink .35s infinite}
 .wtok.marked{background:#ffe0e0;border-bottom:2px solid #e74c3c}
-.mtable{width:100%;border-collapse:collapse;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:10px}
-.mtable td{padding:8px 4px;font-size:13px;vertical-align:middle;border-bottom:1px solid #e8ecf1}
+.mtable{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:12px}
+.mtable td{padding:10px 6px;font-size:14px;vertical-align:middle;border-bottom:1px solid #e8ecf1}
 .mtable tr:last-child td{border-bottom:none}
-.mtable .n1{width:26px;text-align:center;color:#bbb;font-size:11px}
-.mtable .n2{font-weight:500;color:#2F5496;word-break:break-word;cursor:pointer;width:28%}
-.mtable .n3{color:#6b7db3;font-size:12px;word-break:break-word;width:22%;font-family:'Segoe UI','Arial Unicode MS',sans-serif}
-.mtable .n4{color:#555;word-break:break-word;width:28%}
-.mtable .n5{width:72px;text-align:center;white-space:nowrap}
-.sbtn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#2F5496;color:#fff;border:none;cursor:pointer;font-size:13px;margin:0 1px}
+.mtable .n1{width:30px;text-align:center;color:#bbb;font-size:12px}
+.mtable .n2{font-weight:600;color:#2F5496;word-break:break-word;cursor:pointer;padding:10px 8px}
+.mtable .n3{color:#6b7db3;font-size:13px;word-break:break-word;font-family:'Segoe UI','Arial Unicode MS',sans-serif}
+.mtable .n4{color:#555;word-break:break-word}
+.mtable .n5{width:80px;text-align:center;white-space:nowrap}
+.sbtn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#2F5496;color:#fff;border:none;cursor:pointer;font-size:16px;margin:0 2px;touch-action:manipulation}
 .sbtn.playing{background:#c0392b;animation:blink .5s infinite}
-.dbtn{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:none;border:1px solid #e0e0e0;color:#999;cursor:pointer;font-size:11px}
+.dbtn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:none;border:1px solid #e0e0e0;color:#999;cursor:pointer;font-size:14px;touch-action:manipulation}
 .dbtn:active{background:#ffe0e0;color:#c0392b;border-color:#c0392b}
-.edcn{border:none;border-bottom:1px dashed #ccc;background:transparent;font-size:12px;width:90%;padding:2px 4px;color:#555;outline:none}
+.edcn,.edipa{border:none;border-bottom:1px dashed #ccc;background:transparent;font-size:13px;width:85%;padding:4px 6px;color:#555;outline:none;border-radius:0}
 .edcn:focus{border-bottom-color:#2F5496}
-.edipa{border:none;border-bottom:1px dashed #ddd;background:transparent;font-size:11px;width:90%;padding:2px 4px;color:#6b7db3;outline:none;font-family:'Segoe UI','Arial Unicode MS',sans-serif}
+.edipa{color:#6b7db3;font-family:'Segoe UI','Arial Unicode MS',sans-serif;font-size:12px}
 .edipa:focus{border-bottom-color:#6b7db3}
-.empty{text-align:center;padding:40px;color:#bbb;font-size:14px}
+.empty{text-align:center;padding:50px 20px;color:#bbb;font-size:15px;line-height:2}
+.banner{background:#fff3cd;color:#856404;text-align:center;padding:10px 16px;font-size:13px;border-bottom:1px solid #ffc107;line-height:1.6}
+.banner.error{background:#f8d7da;color:#721c24;border-color:#f5c6cb}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
-.footer{text-align:center;font-size:11px;color:#bbb;padding:20px;border-top:1px solid #eee}
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.78);color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+.footer{text-align:center;font-size:12px;color:#bbb;padding:24px 16px;border-top:1px solid #eee;margin-top:20px}
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 24px;border-radius:24px;font-size:14px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;max-width:85vw;text-align:center}
 .toast.show{opacity:1}
 </style>
 </head>
 <body>
 <header>
-  <h1>WAIC面试发音练习</h1>
+  <h1>WAIC面试发音</h1>
   <div class="mode-switch">
-    <button class="mode-btn active" onclick="switchMode('full')">全文</button>
-    <button class="mode-btn" onclick="switchMode('marked')">自标</button>
+    <button class="mode-btn active" id="btnFull" onclick="switchMode('full')">全文</button>
+    <button class="mode-btn" id="btnMarked" onclick="switchMode('marked')">自标</button>
   </div>
 </header>
-<div style="background:#fff3cd;color:#856404;text-align:center;padding:6px;font-size:12px;border-bottom:1px solid #ffc107" id="speechHint">
-  点击任意英文单词发音 | 双击或点"标记"按钮后点击标记单词
-</div>
+<div class="banner" id="banner">点击英文单词发音 | 双击标记 | 用Chrome打开可"添加到主屏幕"变成App</div>
 <div class="toolbar">
   <span class="count" id="infoBar"></span>
-  <button id="markToggle" onclick="toggleMarkMode()" style="border-color:#e74c3c;color:#e74c3c">标记</button>
+  <button id="markToggle" onclick="toggleMarkMode()">标记</button>
   <button onclick="exportData()">导出</button>
-  <button onclick="document.getElementById('impFile').click()">导入</button>
+  <button onclick="document.getElementById('impFile').click()" style="font-size:12px">导入</button>
 </div>
 <div id="content"></div>
 <div class="toast" id="toast"></div>
-<div class="footer">双击标记 | 自标模式: 英文 · 音标 · 中文 | 可编辑</div>
+<div class="footer">双击标记 | 自标: 英文 · 音标 · 中文 | 均可编辑</div>
 <input type="file" id="impFile" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script type="application/json" id="parasData">[{"t":"尊敬的各位评委，您好！","cn":true},{"t":"Good morning / afternoon, distinguished teachers./everyone. It's a great honor to be here today.","cn":false},{"t":"我叫汤兮珩，就读于河北传媒学院戏剧影视导演专业，曾在山东省戏剧影视导演统考中取得全省第24名的成绩。我的学习与实践始终围绕表达、沟通与现场执行展开，希望能以专业与热情服务本届大会。","cn":true},{"t":"My name is Tang Xiheng, and currently, I am a major in Film and Television Directing at Hebei Media University. I ranked 24th in Shandong Province in the unified examination for my major, which reflects both my academic performance and professional ability in the field of media and communication.","cn":false},{"t":"在实践经历方面，我曾担任 RoboMaster 机甲大师赛 HERO 战队宣传经理，全面负责视频创作、新媒体运营与团队协调，账号年度视频播放量超 80 万次；我也曾担任 2026 RMUL 山东站官方解说，独立完成 25 场高强度现场解说，在实践中锻炼了清晰表达、快速反应与现场控场能力。","cn":true},{"t":"The practical experience has improved my ability in real-time performance, clear communication, and teamwork.","cn":false},{"t":"As Publicity Manager for the HERO team at RoboMaster, I led video production, social media operations, and event coordination — helping the account reach over 800,000 video views within a single year.","cn":false},{"t":"I also served as an official commentator at the 2026 RMUL in Shandong province, independently delivering live commentary for 25 matches. This high-intensity environment improved my ability to think on my feet.","cn":false},{"t":"在影视创作方面，我的作品《东栏梨花》荣获中国梦青年影像盛典一等创优，微电影《你》入围澳门国际微电影节。","cn":true},{"t":"In creative filmmaking, my work Pear flowers at Donglan received the First Prize at the China Dream Youth Film Festival, and my short film was selected as an official entry at the Macao International Short Film Festival.","cn":false},{"t":"我熟悉拍摄、剪辑、文案策划与对外沟通，能够根据不同对象调整表达方式；日常注重仪态形象与礼貌细节，性格开朗亲和，服务意识较强，同时具备一定英语口语交流基础。","cn":true},{"t":"I am proficient in filming, editing, copywriting, and client-facing communication. I adapt my communication style to different audiences and take care with presentation and professional etiquette in every interaction. I am outgoing, approachable, and service-oriented, with a functional command of spoken English.","cn":false},{"t":"WAIC 是人工智能领域的重要国际盛会。我期待在新闻媒体、会务接待或机动支持等岗位中发挥传媒专业优势，以专业、热情、稳妥的状态服务大会，成为可靠的\"科技同行者\"。","cn":true},{"t":"The World Artificial Intelligence Conference is one of the most significant international platforms in the AI field. I am eager to contribute my media background in roles such as press support, conference reception, or flexible operational assistance — bringing professionalism, enthusiasm, and reliability to every task. I hope to be a dependable presence alongside the brightest minds in technology. That’s all, thank you.","cn":false},{"t":"一、自我优势类","cn":true},{"t":"Q1：为什么想参加WAIC志愿者？","cn":true},{"t":"中文","cn":true},{"t":"首先，我对人工智能领域一直保持浓厚兴趣。","cn":true},{"t":"作为传媒专业学生，我平时会关注人工智能在媒体传播、内容创作的应用","cn":true},{"t":"WAIC汇聚了全球顶尖专家和创新成果，是了解行业前沿的重要平台。","cn":true},{"t":"同时，我也希望通过志愿服务锻炼自己的沟通能力、组织能力和国际交流能力，在服务大会的过程中提升自己。所以我不仅希望成为活动的参与者，更希望成为大会顺利运行的一份力量。","cn":true},{"t":"English","cn":false},{"t":"Firstly, I have always been interested in the development of artificial intelligence.（AI）","cn":false},{"t":"Secondly, As a student majoring in media, I pay attention to how AI is applied in communication and content creation.","cn":false},{"t":"Third, WAIC brings together leading/famous/outstanding experts and innovations from around the world, so I think it is an excellent platform for me to learn about cutting-edge technologies.","cn":false},{"t":"At the same time, I hope to improve my communication, organizational, and intercultural skills through volunteer work.","cn":false},{"t":"Therefore, I would like not only to participate in the conference, but also to contribute to its successful operation.","cn":false},{"t":"二、岗位认知类","cn":true},{"t":"Q2：你认为外宾接待组最重要的工作是什么？","cn":true},{"t":"中文","cn":true},{"t":"我认为最重要的是让外宾感受到专业、高效和友好的服务。","cn":true},{"t":"外宾来到一个陌生环境时，可能会遇到语言、交通或流程方面的问题。","cn":true},{"t":"作为接待志愿者，我们不仅要提供准确的信息，还要主动发现需求、及时提供帮助。","cn":true},{"t":"很多时候，志愿者代表的是大会形象，甚至代表城市形象，因此责任非常重要。","cn":true},{"t":"English","cn":false},{"t":"I believe the most important responsibility is to provide professional, efficient, and friendly service.","cn":false},{"t":"International guests may face challenges related to language, transportation, or event procedures in an unfamiliar environment.","cn":false},{"t":"As volunteers, we should not only provide accurate information but also proactively identify their needs and offer assistance.","cn":false},{"t":"In many cases, volunteers represent the image of the conference and even the host city, so the responsibility is very important.","cn":false},{"t":"三、应变能力类（超高频）","cn":true},{"t":"Q3：如果外宾向你咨询问题，但你不会回答怎么办？","cn":true},{"t":"中文","cn":true},{"t":"首先，我不会直接说“不知道”。","cn":true},{"t":"我会认真倾听并确认对方的问题，然后礼貌地告诉对方我需要进一步核实信息。","cn":true},{"t":"之后我会第一时间联系组长或工作人员获取准确答案，再及时反馈给外宾。","cn":true},{"t":"我认为最重要的是保证信息准确，而不是急于回答。","cn":true},{"t":"English","cn":false},{"t":"First of all, I would never simply say \"I don't know.\"","cn":false},{"t":"I would listen carefully and make sure I fully understand the question.","cn":false},{"t":"Then I would politely explain that I need to verify the information and immediately seek help from my team leader or staff members.","cn":false},{"t":"After obtaining accurate information, I would promptly return and assist the guest.","cn":false},{"t":"I believe accuracy is more important than giving a quick but uncertain answer.","cn":false},{"t":"Q4：如果外宾情绪激动或抱怨怎么办？","cn":true},{"t":"中文","cn":true},{"t":"我会先保持冷静和耐心。","cn":true},{"t":"首先认真倾听对方的问题，不打断对方，让对方感受到被尊重。","cn":true},{"t":"然后表达理解和歉意，例如：","cn":true},{"t":"“非常抱歉给您带来不便，我们会尽快帮助您解决问题。”","cn":true},{"t":"如果超出我的权限，我会及时向负责人汇报。","cn":true},{"t":"English","cn":false},{"t":"I would remain calm and patient.","cn":false},{"t":"First, I would listen carefully without interrupting and show respect for the guest's concerns.","cn":false},{"t":"Then I would express understanding and apologize for the inconvenience.","cn":false},{"t":"For example:","cn":false},{"t":"“I’m very sorry for the inconvenience. We will do our best to solve the problem as soon as possible.”","cn":false},{"t":"If the issue is beyond my authority, I would immediately report it to the supervisor/leader.","cn":false},{"t":"四、团队合作类","cn":true},{"t":"Q5：你认为团队合作中最重要的是什么？","cn":true},{"t":"中文","cn":true},{"t":"我认为最重要的是沟通和责任感。","cn":true},{"t":"在 RoboMaster 团队工作期间，我经常需要与摄影、运营和技术成员协调工作。","cn":true},{"t":"只有信息及时共享、分工明确，团队才能高效完成任务。","cn":true},{"t":"因此我非常重视沟通，也愿意主动承担责任。","cn":true},{"t":"English","cn":false},{"t":"I believe communication and responsibility are the most important factors in teamwork.","cn":false},{"t":"During my experience with the RoboMaster team, I often coordinated with members from media, operations, and technical departments.","cn":false},{"t":"Only through clear communication and well-defined responsibilities can a team work efficiently.","cn":false},{"t":"Therefore, I always value communication and am willing to take responsibility.","cn":false},{"t":"五、压力处理类","cn":true},{"t":"Q6：如果工作时间长、任务繁重怎么办？","cn":true},{"t":"中文","cn":true},{"t":"我认为大型国际会议本身就具有高强度特点。","cn":true},{"t":"在RMUL赛事解说期间，我连续完成了25场比赛解说，对高强度工作有一定经验。","cn":true},{"t":"面对压力时，我会提前做好准备，合理安排时间，并保持积极心态。","cn":true},{"t":"我相信责任感能够帮助我坚持完成任务。","cn":true},{"t":"English","cn":false},{"t":"I understand that large international conferences are often demanding and fast-paced.","cn":false},{"t":"During RMUL, I completed live commentary for 25 matches, which gave me experience working under pressure.","cn":false},{"t":"When facing heavy workloads, I prepare in advance, manage my time effectively, and maintain a positive attitude.","cn":false},{"t":"I believe a strong sense of responsibility helps me stay focused and complete my tasks successfully.","cn":false},{"t":"六、英语情景题","cn":true},{"t":"Q7：请用英语接待一位外国嘉宾","cn":true},{"t":"标准答案","cn":true},{"t":"Good morning, welcome to WAIC.","cn":false},{"t":"My name is Tang Xiheng, and I am one of the volunteers here.","cn":false},{"t":"May I help you with registration, venue directions, or any other information?","cn":false},{"t":"If you have any questions during the conference, please feel free to ask me.","cn":false},{"t":"I hope you enjoy your time at WAIC.","cn":false},{"t":"七、突发情况题（群面高频）","cn":true},{"t":"Q8：如果你带领的外宾突然走失了怎么办？","cn":true},{"t":"中文","cn":true},{"t":"首先保持冷静。","cn":true},{"t":"我会立即联系该外宾，确认其当前位置。","cn":true},{"t":"同时向组长汇报情况，并协调其他工作人员共同寻找。","cn":true},{"t":"找到后确认其安全，并帮助其重新回到活动流程中。","cn":true},{"t":"事后也会总结原因，避免类似情况再次发生。","cn":true},{"t":"English","cn":false},{"t":"First, I would stay calm.","cn":false},{"t":"I would immediately try to contact the guest and confirm their location.","cn":false},{"t":"At the same time, I would report the situation to the team leader and coordinate with other staff members.","cn":false},{"t":"Once the guest is located, I would ensure their safety and help them return to the scheduled activities.","cn":false},{"t":"Afterwards, I would review the situation to prevent similar incidents.","cn":false},{"t":"八、了解WAIC类","cn":true},{"t":"Q9：你对WAIC有什么了解？","cn":true},{"t":"中文","cn":true},{"t":"WAIC是世界人工智能大会，是中国最具影响力的人工智能国际会议之一。","cn":true},{"t":"大会汇聚全球顶尖科学家、政府机构和创新团队，共同探讨人工智能的发展趋势和未来应用。","cn":true},{"t":"它不仅是技术交流的平台，也是国际合作的重要桥梁。","cn":true},{"t":"English","cn":false},{"t":"WAIC, the World Artificial Intelligence Conference, is one of the most influential AI conferences in China.","cn":false},{"t":"It brings together famous scientists, policymakers, and innovators from around the world.","cn":false},{"t":"The conference serves as a platform for technological exchange and international cooperation while exploring the future of artificial intelligence.","cn":false},{"t":"九、群面必杀题（很容易出现）","cn":true},{"t":"Q10：如果你和另一位志愿者意见不同怎么办？","cn":true},{"t":"中文","cn":true},{"t":"我认为目标是一致的，分歧只是解决问题方式不同。","cn":true},{"t":"我会先认真倾听对方意见，分析双方方案的优缺点。","cn":true},{"t":"如果能够达成共识最好；如果仍有分歧，我会服从团队安排，以整体利益为优先。","cn":true},{"t":"English","cn":false},{"t":"I believe that team members usually share the same goal, even if their approaches differ.","cn":false},{"t":"I would listen carefully to the other person's opinion and evaluate the advantages and disadvantages of both ideas.","cn":false},{"t":"If possible, we can reach a consensus. If not, I would follow the team's decision and prioritize the overall interest of the group.","cn":false},{"t":"面试官可能追问你的经历（重点准备）","cn":true},{"t":"因为你的简历里有：","cn":true},{"t":"• RoboMaster宣传经理","cn":true},{"t":"• RMUL官方解说","cn":true},{"t":"• 获奖影视作品","cn":true},{"t":"面试官很可能追问：","cn":true},{"t":"Why do you think your RoboMaster experience can help you in WAIC?","cn":false},{"t":"What did you learn from being a commentator?","cn":false},{"t":"Tell us about a challenge you faced during an event.","cn":false},{"t":"How would you communicate with international guests if your English is not perfect?","cn":false},{"t":"这四个问题建议重点背，因为命中率非常高。","cn":true},{"t":"对于外宾接待组，我最推荐你额外准备一句万能英语回答，几乎所有情景题都能用：","cn":true},{"t":"First, I would stay calm and assess the situation. Then I would communicate clearly, seek support when necessary, and make sure the guest receives timely assistance.","cn":false},{"t":"（首先保持冷静并判断情况，然后清晰沟通，在必要时寻求帮助，并确保外宾得到及时协助。）","cn":true},{"t":"这句话在应急处理、投诉处理、迷路、语言障碍、时间冲突等问题中都能直接套用。对于群面来说，会显得特别专业。","cn":true}]</script>
-<script type="application/json" id="markedData">[{"en":"distinguished teachers","cn":"尊敬的老师们","ipa":"dɪˈstɪŋgwɪʃt ˈtiʧərz"},{"en":"everyone","cn":"各位/大家","ipa":"ˈɛvriˌwən"},{"en":"Film and Television Directing at Hebei Media University","cn":"河北传媒学院戏剧影视导演专业","ipa":"fɪlm ænd ˈtɛləˌvɪʒən dɪˈrɛktɪŋ æt həˈbeɪ ˈmidiə ˌjunɪˈvɜrsɪti"},{"en":"unified examination","cn":"统考","ipa":"ˈjunəˌfaɪd ɪgˌzæməˈneɪʃən"},{"en":"coordination","cn":"协调","ipa":"koʊˌɔrdəˈneɪʃən"},{"en":"commentator","cn":"解说员","ipa":"ˈkɑmənˌteɪtər"},{"en":"commentary","cn":"解说","ipa":"ˈkɑmənˌtɛri"},{"en":"intensity","cn":"强度","ipa":"ˌɪnˈtɛnsɪti"},{"en":"Pear flowers at Donglan","cn":"《东栏梨花》","ipa":"pɛr ˈflaʊərz æt dɔŋlæn"},{"en":"entry","cn":"参赛作品/入围","ipa":"ˈɛntri"},{"en":"Macao","cn":"澳门","ipa":"məˈkaʊ"},{"en":"am proficient in","cn":"精通于","ipa":"æm prɑˈfɪʃənt ɪn"},{"en":"editing","cn":"剪辑","ipa":"ˈɛdɪtɪŋ"},{"en":"client-facing","cn":"面向客户的","ipa":"ˈklaɪənt ˈfeɪsɪŋ"},{"en":"I adapt my communication style to different audiences and take care with presentation and professional etiquette in every interaction. I am outgoing, approachable, and service-oriented, with a functional command of spoken English","cn":"根据受众调整沟通方式，注重仪表和礼仪。外向、亲和、服务意识强，具备英语口语能力。","ipa":"aɪ əˈdæpt maɪ kəmˌjunəˈkeɪʃən staɪl tɪ ˈdɪfərənt ˈɔdiənsəz ənd teɪk kɛr wɪθ ˌprɛzənˈteɪʃən ənd prəˈfɛʃənəl ˈɛtəkət ɪn ˈɛvəri ˌɪnərˈækʃən. aɪ æm ˈaʊtˌgoʊɪŋ, əˈproʊʧəbəl, ənd service-oriented*, wɪθ ə ˈfəŋkʃənəl kəˈmænd əv ˈspoʊkən ˈɪŋlɪʃ"},{"en":"eager","cn":"渴望","ipa":"ˈigər"},{"en":"support","cn":"支持","ipa":"səˈpɔrt"},{"en":"reception","cn":"接待","ipa":"rɪˈsɛpʃən"},{"en":"bringing professionalism, enthusiasm, and reliability to every task. I hope to be a dependable presence alongside the brightest minds in technology","cn":"以专业精神、热情和可靠对待每项任务，做科技精英身边靠谱的人。","ipa":"ˈbrɪŋɪŋ prəˈfɛʃənəˌlɪzəm, ɪnˈθuziˌæzəm, ənd riˌlaɪəˈbɪləti tɪ ˈɛvəri tæsk. aɪ hoʊp tɪ bi ə dɪˈpɛndəbəl ˈprɛzəns əˈlɔŋˈsaɪd ðə ˈbraɪtəst maɪndz ɪn tɛkˈnɑləʤi"},{"en":"Firstly","cn":"首先","ipa":"ˈfərstli"},{"en":"been interested in","cn":"对……感兴趣","ipa":"bɪn ˈɪntəˌrɛstɪd ɪn"},{"en":"artificial intelligence.（AI）","cn":"人工智能","ipa":"ˌɑrtəˈfɪʃəl intelligence.（ai）*）"},{"en":"Secondly","cn":"其次","ipa":"ˈsɛkəndli"},{"en":"pay attention to","cn":"关注","ipa":"peɪ əˈtɛnʃən tɪ"},{"en":"applied","cn":"应用","ipa":"əˈplaɪd"},{"en":"Third","cn":"第三","ipa":"θərd"},{"en":"platform","cn":"平台","ipa":"ˈplætˌfɔrm"},{"en":"At the same time","cn":"同时","ipa":"æt ðə seɪm taɪm"},{"en":"organizational","cn":"组织的","ipa":"ˌɔrgənəˈzeɪʃənəl"},{"en":"intercultural","cn":"跨文化的","ipa":"ˌɪntərˈkəlʧərəl"},{"en":"professional, efficient, and friendly","cn":"专业、高效、友好","ipa":"prəˈfɛʃənəl, ɪˈfɪʃənt, ənd ˈfrɛndli"},{"en":"related","cn":"相关的","ipa":"rɪˈleɪtɪd"},{"en":"transportation","cn":"交通","ipa":"ˌtrænspərˈteɪʃən"},{"en":"unfamiliar","cn":"不熟悉的","ipa":"ˌənfəˈmɪljər"},{"en":"not only","cn":"不仅","ipa":"nɑt ˈoʊnli"},{"en":"accurate","cn":"准确的","ipa":"ˈækjərət"},{"en":"but also","cn":"而且","ipa":"bət ˈɔlsoʊ"},{"en":"proactively","cn":"主动地","ipa":"ˌproʊˈæktɪvˌli"},{"en":"identify","cn":"识别","ipa":"aɪˈdɛntəˌfaɪ"},{"en":"listen carefully","cn":"仔细倾听","ipa":"ˈlɪsən ˈkɛrfəli"},{"en":"fully understand the question","cn":"完全理解问题","ipa":"ˈfʊli ˌəndərˈstænd ðə kˈwɛʃən"},{"en":"politely explain","cn":"礼貌解释","ipa":"pəˈlaɪtli ɪkˈspleɪn"},{"en":"verify the information","cn":"核实信息","ipa":"ˈvɛrəˌfaɪ ðə ˌɪnˌfɔrˈmeɪʃən"},{"en":"immediately","cn":"立刻","ipa":"ˌɪˈmiˌdiətli"},{"en":"seek help from my team leader","cn":"向组长求助","ipa":"sik hɛlp frəm maɪ tim ˈlidər"},{"en":"obtaining accurate information","cn":"获取准确信息","ipa":"əbˈteɪnɪŋ ˈækjərət ˌɪnˌfɔrˈmeɪʃən"},{"en":"promptly","cn":"迅速地","ipa":"ˈprɑmptli"},{"en":"accuracy","cn":"准确性","ipa":"ˈækjərəsi"},{"en":"uncertain","cn":"不确定的","ipa":"ənˈsərtən"},{"en":"calm","cn":"冷静","ipa":"kɑm"},{"en":"patient","cn":"耐心的","ipa":"ˈpeɪʃənt"},{"en":"interrupting","cn":"打断","ipa":"ˌɪntərˈəptɪŋ"},{"en":"respect","cn":"尊重","ipa":"rɪˈspɛkt"},{"en":"express","cn":"表达","ipa":"ɪkˈsprɛs"},{"en":"apologize","cn":"道歉","ipa":"əˈpɑləˌʤaɪz"},{"en":"inconvenience","cn":"不便","ipa":"ˌɪnkənˈvinjəns"},{"en":"If the issue is beyond my authority, I would immediately report it to the supervisor/leader","cn":"如果超出权限，立即向上级报告。","ipa":"ɪf ðə ˈɪʃu ɪz bɪɔnd maɪ əˈθɔrəti aɪ wʊd ˌɪˈmiˌdiətli rɪˈpɔrt ɪt tɪ ðə supervisor/leader"},{"en":"communication and responsibility","cn":"沟通与责任","ipa":"kəmˌjunəˈkeɪʃən ənd riˌspɑnsəˈbɪləti"},{"en":"During my experience with","cn":"在……经历中","ipa":"ˈdʊrɪŋ maɪ ɪkˈspɪriəns wɪθ"},{"en":"coordinated with","cn":"与……协调","ipa":"koʊˈɔrdəneɪtɪd wɪθ"},{"en":"efficiently","cn":"高效地","ipa":"ɪˈfɪʃəntli"},{"en":"conferences","cn":"会议","ipa":"ˈkɑnfərənsəz"},{"en":"matches","cn":"比赛","ipa":"ˈmæʧɪz"},{"en":"workloads","cn":"工作量","ipa":"ˈwərˌkloʊdz"},{"en":"effectively","cn":"有效地","ipa":"ˈifɛktɪvli"},{"en":"maintain","cn":"保持","ipa":"meɪnˈteɪn"},{"en":"attitude","cn":"态度","ipa":"ˈætəˌtud"},{"en":"successfully","cn":"成功地","ipa":"səkˈsɛsfəli"},{"en":"May I help you","cn":"我可以帮您吗","ipa":"meɪ aɪ hɛlp ju"},{"en":"registration","cn":"登记/注册","ipa":"ˌrɛʤɪˈstreɪʃən"},{"en":"venue directions","cn":"场馆指引","ipa":"ˈvɛnju dɪˈrɛkʃɪnz"},{"en":"situation","cn":"情况","ipa":"ˌsɪʧuˈeɪʃən"},{"en":"coordinate","cn":"协调","ipa":"koʊˈɔrdəˌneɪt"},{"en":"scheduled","cn":"安排的","ipa":"ˈskɛʤʊld"},{"en":"influential","cn":"有影响力的","ipa":"ˌɪnfluˈɛnʃəl"},{"en":"technological","cn":"技术的","ipa":"ˌtɛknəˈlɑʤɪkəl"},{"en":"approaches","cn":"方法/方式","ipa":"əˈproʊʧɪz"},{"en":"opinion","cn":"观点","ipa":"əˈpɪnjən"},{"en":"evaluate","cn":"评估","ipa":"ɪˈvæljuˌeɪt"},{"en":"consensus","cn":"共识","ipa":"kənˈsɛnsəs"},{"en":"prioritize","cn":"优先考虑","ipa":"praɪˈɔrəˌtaɪz"},{"en":"First, I would stay calm and assess the situation. Then I would communicate clearly, seek support when necessary, and make sure the guest receives timely assistance","cn":"先保持冷静评估情况，清晰沟通，必要时寻求支持，确保嘉宾得到及时帮助。","ipa":"fərst, aɪ wʊd steɪ kɑm ənd əˈsɛs ðə ˌsɪʧuˈeɪʃən. ðɛn aɪ wʊd kəmˈjunəˌkeɪt ˈklɪrli, sik səˈpɔrt wɪn ˈnɛsəˌsɛri, ənd meɪk ʃʊr ðə gɛst rɪˈsivz ˈtaɪmli əˈsɪstəns"}]</script>
+<script type="application/json" id="markedData">[{"en":"distinguished teachers","cn":"尊敬的老师们","ipa":"dɪˈstɪŋgwɪʃt ˈtiʧərz"},{"en":"everyone","cn":"各位/大家","ipa":"ˈɛvriˌwən"},{"en":"Film and Television Directing at Hebei Media University","cn":"河北传媒学院戏剧影视导演专业","ipa":"fɪlm ənd ˈtɛləˌvɪʒən dɪˈrɛktɪŋ æt ˈhibi ˈmidiə ˌjunəˈvərsəti"},{"en":"unified examination","cn":"统考","ipa":"ˈjunəˌfaɪd ɪgˌzæməˈneɪʃən"},{"en":"coordination","cn":"协调","ipa":"koʊˌɔrdəˈneɪʃən"},{"en":"commentator","cn":"解说员","ipa":"ˈkɑmənˌteɪtər"},{"en":"commentary","cn":"解说","ipa":"ˈkɑmənˌtɛri"},{"en":"intensity","cn":"强度","ipa":"ˌɪnˈtɛnsɪti"},{"en":"Pear flowers at Donglan","cn":"《东栏梨花》","ipa":"pɛr ˈflaʊərz æt dɔŋlæn"},{"en":"entry","cn":"参赛作品/入围","ipa":"ˈɛntri"},{"en":"Macao","cn":"澳门","ipa":"məˈkaʊ"},{"en":"am proficient in","cn":"精通于","ipa":"æm prɑˈfɪʃənt ɪn"},{"en":"editing","cn":"剪辑","ipa":"ˈɛdɪtɪŋ"},{"en":"client-facing","cn":"面向客户的","ipa":"ˈklaɪənt ˈfeɪsɪŋ"},{"en":"I adapt my communication style to different audiences and take care with presentation and professional etiquette in every interaction. I am outgoing, approachable, and service-oriented, with a functional command of spoken English","cn":"根据受众调整沟通方式，注重仪表和礼仪。外向、亲和、服务意识强，具备英语口语能力。","ipa":"aɪ əˈdæpt maɪ kəmˌjunəˈkeɪʃən staɪl tɪ ˈdɪfərənt ˈɔdiənsəz ənd teɪk kɛr wɪθ ˌprɛzənˈteɪʃən ənd prəˈfɛʃənəl ˈɛtəkət ɪn ˈɛvəri ˌɪnərˈækʃən. aɪ æm ˈaʊtˌgoʊɪŋ, əˈproʊʧəbəl, ənd service-oriented*, wɪθ ə ˈfəŋkʃənəl kəˈmænd əv ˈspoʊkən ˈɪŋlɪʃ"},{"en":"eager","cn":"渴望","ipa":"ˈigər"},{"en":"support","cn":"支持","ipa":"səˈpɔrt"},{"en":"reception","cn":"接待","ipa":"rɪˈsɛpʃən"},{"en":"bringing professionalism, enthusiasm, and reliability to every task. I hope to be a dependable presence alongside the brightest minds in technology","cn":"以专业精神、热情和可靠对待每项任务，做科技精英身边靠谱的人。","ipa":"ˈbrɪŋɪŋ prəˈfɛʃənəˌlɪzəm, ɪnˈθuziˌæzəm, ənd riˌlaɪəˈbɪləti tɪ ˈɛvəri tæsk. aɪ hoʊp tɪ bi ə dɪˈpɛndəbəl ˈprɛzəns əˈlɔŋˈsaɪd ðə ˈbraɪtəst maɪndz ɪn tɛkˈnɑləʤi"},{"en":"Firstly","cn":"首先","ipa":"ˈfərstli"},{"en":"been interested in","cn":"对……感兴趣","ipa":"bɪn ˈɪntəˌrɛstɪd ɪn"},{"en":"artificial intelligence.（AI）","cn":"人工智能","ipa":"ˌɑrtəˈfɪʃəl intelligence.（ai）*）"},{"en":"Secondly","cn":"其次","ipa":"ˈsɛkəndli"},{"en":"pay attention to","cn":"关注","ipa":"peɪ əˈtɛnʃən tɪ"},{"en":"applied","cn":"应用","ipa":"əˈplaɪd"},{"en":"Third","cn":"第三","ipa":"θərd"},{"en":"platform","cn":"平台","ipa":"ˈplætˌfɔrm"},{"en":"At the same time","cn":"同时","ipa":"æt ðə seɪm taɪm"},{"en":"organizational","cn":"组织的","ipa":"ˌɔrgənəˈzeɪʃənəl"},{"en":"intercultural","cn":"跨文化的","ipa":"ˌɪntərˈkəlʧərəl"},{"en":"professional, efficient, and friendly","cn":"专业、高效、友好","ipa":"prəˈfɛʃənəl, ɪˈfɪʃənt, ənd ˈfrɛndli"},{"en":"related","cn":"相关的","ipa":"rɪˈleɪtɪd"},{"en":"transportation","cn":"交通","ipa":"ˌtrænspərˈteɪʃən"},{"en":"unfamiliar","cn":"不熟悉的","ipa":"ˌənfəˈmɪljər"},{"en":"not only","cn":"不仅","ipa":"nɑt ˈoʊnli"},{"en":"accurate","cn":"准确的","ipa":"ˈækjərət"},{"en":"but also","cn":"而且","ipa":"bət ˈɔlsoʊ"},{"en":"proactively","cn":"主动地","ipa":"ˌproʊˈæktɪvˌli"},{"en":"identify","cn":"识别","ipa":"aɪˈdɛntəˌfaɪ"},{"en":"listen carefully","cn":"仔细倾听","ipa":"ˈlɪsən ˈkɛrfəli"},{"en":"fully understand the question","cn":"完全理解问题","ipa":"ˈfʊli ˌəndərˈstænd ðə kˈwɛʃən"},{"en":"politely explain","cn":"礼貌解释","ipa":"pəˈlaɪtli ɪkˈspleɪn"},{"en":"verify the information","cn":"核实信息","ipa":"ˈvɛrəˌfaɪ ðə ˌɪnˌfɔrˈmeɪʃən"},{"en":"immediately","cn":"立刻","ipa":"ˌɪˈmiˌdiətli"},{"en":"seek help from my team leader","cn":"向组长求助","ipa":"sik hɛlp frəm maɪ tim ˈlidər"},{"en":"obtaining accurate information","cn":"获取准确信息","ipa":"əbˈteɪnɪŋ ˈækjərət ˌɪnˌfɔrˈmeɪʃən"},{"en":"promptly","cn":"迅速地","ipa":"ˈprɑmptli"},{"en":"accuracy","cn":"准确性","ipa":"ˈækjərəsi"},{"en":"uncertain","cn":"不确定的","ipa":"ənˈsərtən"},{"en":"calm","cn":"冷静","ipa":"kɑm"},{"en":"patient","cn":"耐心的","ipa":"ˈpeɪʃənt"},{"en":"interrupting","cn":"打断","ipa":"ˌɪntərˈəptɪŋ"},{"en":"respect","cn":"尊重","ipa":"rɪˈspɛkt"},{"en":"express","cn":"表达","ipa":"ɪkˈsprɛs"},{"en":"apologize","cn":"道歉","ipa":"əˈpɑləˌʤaɪz"},{"en":"inconvenience","cn":"不便","ipa":"ˌɪnkənˈvinjəns"},{"en":"If the issue is beyond my authority, I would immediately report it to the supervisor/leader","cn":"如果超出权限，立即向上级报告。","ipa":"ɪf ðə ˈɪʃu ɪz bɪɔnd maɪ əˈθɔrəti aɪ wʊd ˌɪˈmiˌdiətli rɪˈpɔrt ɪt tɪ ðə supervisor/leader"},{"en":"communication and responsibility","cn":"沟通与责任","ipa":"kəmˌjunəˈkeɪʃən ənd riˌspɑnsəˈbɪləti"},{"en":"During my experience with","cn":"在……经历中","ipa":"ˈdʊrɪŋ maɪ ɪkˈspɪriəns wɪθ"},{"en":"coordinated with","cn":"与……协调","ipa":"koʊˈɔrdəneɪtɪd wɪθ"},{"en":"efficiently","cn":"高效地","ipa":"ɪˈfɪʃəntli"},{"en":"conferences","cn":"会议","ipa":"ˈkɑnfərənsəz"},{"en":"matches","cn":"比赛","ipa":"ˈmæʧɪz"},{"en":"workloads","cn":"工作量","ipa":"ˈwərˌkloʊdz"},{"en":"effectively","cn":"有效地","ipa":"ˈifɛktɪvli"},{"en":"maintain","cn":"保持","ipa":"meɪnˈteɪn"},{"en":"attitude","cn":"态度","ipa":"ˈætəˌtud"},{"en":"successfully","cn":"成功地","ipa":"səkˈsɛsfəli"},{"en":"May I help you","cn":"我可以帮您吗","ipa":"meɪ aɪ hɛlp ju"},{"en":"registration","cn":"登记/注册","ipa":"ˌrɛʤɪˈstreɪʃən"},{"en":"venue directions","cn":"场馆指引","ipa":"ˈvɛnju dɪˈrɛkʃɪnz"},{"en":"situation","cn":"情况","ipa":"ˌsɪʧuˈeɪʃən"},{"en":"coordinate","cn":"协调","ipa":"koʊˈɔrdəˌneɪt"},{"en":"scheduled","cn":"安排的","ipa":"ˈskɛʤʊld"},{"en":"influential","cn":"有影响力的","ipa":"ˌɪnfluˈɛnʃəl"},{"en":"technological","cn":"技术的","ipa":"ˌtɛknəˈlɑʤɪkəl"},{"en":"approaches","cn":"方法/方式","ipa":"əˈproʊʧɪz"},{"en":"opinion","cn":"观点","ipa":"əˈpɪnjən"},{"en":"evaluate","cn":"评估","ipa":"ɪˈvæljuˌeɪt"},{"en":"consensus","cn":"共识","ipa":"kənˈsɛnsəs"},{"en":"prioritize","cn":"优先考虑","ipa":"praɪˈɔrəˌtaɪz"},{"en":"First, I would stay calm and assess the situation. Then I would communicate clearly, seek support when necessary, and make sure the guest receives timely assistance","cn":"先保持冷静评估情况，清晰沟通，必要时寻求支持，确保嘉宾得到及时帮助。","ipa":"fərst, aɪ wʊd steɪ kɑm ənd əˈsɛs ðə ˌsɪʧuˈeɪʃən. ðɛn aɪ wʊd kəmˈjunəˌkeɪt ˈklɪrli, sik səˈpɔrt wɪn ˈnɛsəˌsɛri, ənd meɪk ʃʊr ðə gɛst rɪˈsivz ˈtaɪmli əˈsɪstəns"}]</script>
 
 <script>
+// ====== DATA ======
 var PARAS = JSON.parse(document.getElementById('parasData').textContent);
 var MARKED = (function(){
   try{
-    var saved = localStorage.getItem('waic_v5');
-    if(saved){ var p = JSON.parse(saved); if(Array.isArray(p) && p.length) return p; }
+    var s = localStorage.getItem('waic_v6');
+    if(s){ var p = JSON.parse(s); if(Array.isArray(p) && p.length) return p; }
   }catch(e){}
   return JSON.parse(document.getElementById('markedData').textContent);
 })();
@@ -85,27 +92,28 @@ var mode = 'full', markMode = false;
 var synth = window.speechSynthesis;
 var voices = [], utt = null, activated = false;
 
-if(synth){
-  voices = synth.getVoices();
-  synth.onvoiceschange = function(){ voices = synth.getVoices(); };
-} else {
-  var h = document.getElementById('speechHint');
-  h.textContent = '您的浏览器不支持语音合成，请换用 Chrome/Edge/Safari';
-  h.style.background = '#f8d7da'; h.style.color = '#721c24';
-}
+// ====== SPEECH SETUP ======
+var bannerEl = document.getElementById('banner');
+var audioCache = {};
 
+// Youdao TTS - works on ALL Chinese Android phones, no Google needed
+bannerEl.textContent = '点击单词发音 (有道TTS) | 双击标记 | 国内网络直连';
+
+// ====== TOAST ======
+var toastTimer;
 function toast(m){
   var t = document.getElementById('toast');
   t.textContent = m; t.classList.add('show');
-  clearTimeout(t._tid);
-  t._tid = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2000);
 }
 
+// ====== HELPERS ======
 function norm(s){ return s.replace(/[^a-zA-Z0-9\s'-]/g,'').trim().toLowerCase(); }
-function findIdx(text){ var c = norm(text); return MARKED.findIndex(function(m){ return norm(m.en) === c; }); }
+function findIdx(text){ return MARKED.findIndex(function(m){ return norm(m.en) === norm(text); }); }
 
+// ====== SPEAK (Youdao TTS primary) ======
 function speak(ev){
-  if(!synth) return;
   var el = (ev.target.closest && ev.target.closest('[data-word]')) ||
            (ev.target.parentElement && ev.target.parentElement.closest('[data-word]'));
   if(!el) return;
@@ -113,47 +121,46 @@ function speak(ev){
   if(!text) return;
   ev.stopPropagation();
 
-  if(!activated){ activated = true; var h = document.getElementById('speechHint'); if(h) h.style.display = 'none'; }
+  if(!activated){ activated = true; bannerEl.style.display = 'none'; }
 
-  synth.cancel();
   document.querySelectorAll('.playing').forEach(function(e){ e.classList.remove('playing'); });
   el.classList.add('playing');
 
-  utt = new SpeechSynthesisUtterance(text);
-  utt.lang = 'en-US'; utt.rate = 0.82; utt.volume = 1;
-  var v = voices.find(function(x){ return x.lang === 'en-US' && x.localService; }) ||
-          voices.find(function(x){ return x.lang === 'en-US'; }) ||
-          voices.find(function(x){ return x.lang && x.lang.indexOf('en-') === 0; });
-  if(v) utt.voice = v;
-  utt.onend = utt.onerror = function(e){
-    el.classList.remove('playing');
-    if(e && e.error === 'not-allowed') toast('语音被阻止，请直接点击单词（不要长按）');
-  };
+  function finish(){ el.classList.remove('playing'); }
 
-  // Speak synchronously — critical for iOS
-  synth.speak(utt);
+  var url = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(text) + '&type=1';
+  var a = audioCache[url];
+  if(!a){ a = new Audio(url); audioCache[url] = a; }
+  a.currentTime = 0;
+  a.play().then(function(){}).catch(function(e){
+    finish();
+    toast('网络错误，请检查联网');
+  });
+  a.onended = finish;
+  a.onerror = function(){
+    delete audioCache[url];
+    finish();
+    toast('发音加载失败');
+  };
 }
 
+// ====== MARK ======
 function toggleMark(ev){
   var el = (ev.target.closest && ev.target.closest('[data-word]')) ||
            (ev.target.parentElement && ev.target.parentElement.closest('[data-word]'));
   if(!el) return;
-  var text = el.getAttribute('data-word');
-  var clean = norm(text);
+  var text = el.getAttribute('data-word'), clean = norm(text);
   if(!clean || clean.length < 2) return;
   var idx = findIdx(text);
-  if(idx >= 0){
-    MARKED.splice(idx, 1); el.classList.remove('marked'); toast('取消: ' + clean);
-  } else {
-    MARKED.push({en: clean, cn: '', ipa: ''}); el.classList.add('marked'); toast('标记: ' + clean);
-  }
-  save(); if(mode === 'marked') renderMarked(); updateToolbar();
+  if(idx >= 0){ MARKED.splice(idx,1); el.classList.remove('marked'); toast('取消: '+clean); }
+  else{ MARKED.push({en:clean,cn:'',ipa:''}); el.classList.add('marked'); toast('标记: '+clean); }
+  save(); if(mode==='marked') renderMarked(); updateToolbar();
 }
 
-function save(){ try{ localStorage.setItem('waic_v5', JSON.stringify(MARKED)); }catch(e){} }
+function save(){ try{ localStorage.setItem('waic_v6',JSON.stringify(MARKED)); }catch(e){} }
 
 function exportData(){
-  var b = new Blob([JSON.stringify(MARKED, null, 2)], {type: 'application/json'});
+  var b = new Blob([JSON.stringify(MARKED,null,2)],{type:'application/json'});
   var a = document.createElement('a'); a.href = URL.createObjectURL(b);
   a.download = 'waic_marked.json'; a.click(); toast('已导出');
 }
@@ -162,22 +169,19 @@ function handleImport(e){
   var f = e.target.files[0]; if(!f) return;
   var r = new FileReader();
   r.onload = function(){
-    try{ var d = JSON.parse(r.result); if(Array.isArray(d)){ MARKED = d; save(); if(mode === 'marked') renderMarked(); updateToolbar(); toast('导入 ' + d.length + ' 项'); } }
+    try{ var d = JSON.parse(r.result); if(Array.isArray(d)){ MARKED=d; save(); if(mode==='marked') renderMarked(); updateToolbar(); toast('导入 '+d.length+' 项'); } }
     catch(ex){ toast('格式错误'); }
   };
-  r.readAsText(f); e.target.value = '';
+  r.readAsText(f); e.target.value='';
 }
 
-function removeMarked(idx, e){
-  e.stopPropagation();
-  var w = MARKED[idx].en; MARKED.splice(idx, 1); save();
-  renderMarked(); updateToolbar(); toast('删除: ' + w);
-}
-function updateCN(idx, v){ MARKED[idx].cn = v; save(); }
-function updateIPA(idx, v){ MARKED[idx].ipa = v; save(); }
+function removeMarked(idx,e){ e.stopPropagation(); var w=MARKED[idx].en; MARKED.splice(idx,1); save(); renderMarked(); updateToolbar(); toast('删除: '+w); }
+function updateCN(idx,v){ MARKED[idx].cn=v; save(); }
+function updateIPA(idx,v){ MARKED[idx].ipa=v; save(); }
 
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
+// ====== RENDER ======
 function renderFull(){
   var h = '';
   for(var i = 0; i < PARAS.length; i++){
@@ -205,17 +209,17 @@ function renderFull(){
 function renderMarked(){
   var h = '';
   if(!MARKED.length){
-    h = '<div class="empty"><p>暂无自标词汇</p><p style="font-size:12px">切换到"全文"，点击"标记"后点击单词添加</p></div>';
+    h = '<div class="empty"><p>暂无自标词汇</p><p style="font-size:13px">切换到"全文"→ 点"标记"→ 点击单词添加</p></div>';
   } else {
     h = '<table class="mtable">';
     for(var i = 0; i < MARKED.length; i++){
       var m = MARKED[i];
       h += '<tr>';
-      h += '<td class="n1">' + (i + 1) + '</td>';
+      h += '<td class="n1">' + (i+1) + '</td>';
       h += '<td class="n2" data-word="' + esc(m.en) + '" onclick="speak(event)">' + esc(m.en) + '</td>';
-      h += '<td class="n3"><input class="edipa" value="' + esc(m.ipa || '') + '" placeholder="音标" onchange="updateIPA(' + i + ',this.value)" oninput="updateIPA(' + i + ',this.value)"></td>';
-      h += '<td class="n4"><input class="edcn" value="' + esc(m.cn || '') + '" placeholder="中文释义" onchange="updateCN(' + i + ',this.value)" oninput="updateCN(' + i + ',this.value)"></td>';
-      h += '<td class="n5"><button class="sbtn" data-word="' + esc(m.en) + '" onclick="speak(event)">&#x1F50A;</button><button class="dbtn" onclick="removeMarked(' + i + ',event)">&#x2716;</button></td>';
+      h += '<td class="n3"><input class="edipa" value="' + esc(m.ipa||'') + '" placeholder="音标" onchange="updateIPA('+i+',this.value)" oninput="updateIPA('+i+',this.value)"></td>';
+      h += '<td class="n4"><input class="edcn" value="' + esc(m.cn||'') + '" placeholder="中文释义" onchange="updateCN('+i+',this.value)" oninput="updateCN('+i+',this.value)"></td>';
+      h += '<td class="n5"><button class="sbtn" data-word="' + esc(m.en) + '" onclick="speak(event)">&#x1F50A;</button><button class="dbtn" onclick="removeMarked('+i+',event)">&#x2716;</button></td>';
       h += '</tr>';
     }
     h += '</table>';
@@ -225,10 +229,9 @@ function renderMarked(){
 
 function switchMode(m){
   mode = m;
-  var btns = document.querySelectorAll('.mode-btn');
-  btns[0].classList.toggle('active', m === 'full');
-  btns[1].classList.toggle('active', m === 'marked');
-  if(m === 'full') renderFull(); else renderMarked();
+  document.getElementById('btnFull').classList.toggle('active', m==='full');
+  document.getElementById('btnMarked').classList.toggle('active', m==='marked');
+  if(m==='full') renderFull(); else renderMarked();
   updateToolbar();
 }
 
@@ -237,7 +240,7 @@ function updateToolbar(){
   if(mode === 'full'){
     el.textContent = markMode ? '标记模式: 点击标记/取消 | ' + MARKED.length + ' 个' : '点击发音 · 双击标记 | ' + MARKED.length + ' 个';
   } else {
-    el.textContent = '自标 | ' + MARKED.length + ' 项 | 英文 · 音标 · 中文可编辑';
+    el.textContent = '自标 | ' + MARKED.length + ' 项 | 英文·音标·中文';
   }
 }
 
@@ -253,7 +256,7 @@ function toggleMarkMode(){
   }
 }
 
-// Event delegation
+// ====== EVENTS ======
 document.getElementById('content').addEventListener('click', function(ev){
   var el = (ev.target.closest && ev.target.closest('[data-word]')) ||
            (ev.target.parentElement && ev.target.parentElement.closest('[data-word]'));
@@ -267,6 +270,7 @@ document.getElementById('content').addEventListener('dblclick', function(ev){
   if(mode === 'full') toggleMark(ev);
 });
 
+// ====== INIT ======
 renderFull();
 updateToolbar();
 </script>
